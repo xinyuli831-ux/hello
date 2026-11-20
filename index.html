@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>윤서하 포트폴리오 | Yun Seoha</title>
+<style>
+:root{
+    --bg-red:#8B0000;
+    --card-bg:#A00000;
+    --card-head:#5C0000;
+    --text-white:#ffffff;
+    --accent-red:#D32F2F;
+    --hover-red:#B71C1C;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family: 'Noto Sans KR', sans-serif;}
+body{background-color:var(--bg-red);color:var(--text-white);line-height:1.7;text-align:center;}
+.container{max-width:1100px;margin:0 auto;padding:0 20px;}
+
+/* Header / Nav */
+header{background:var(--card-head);color:var(--text-white);padding:18px 0;position:sticky;top:0;z-index:10;box-shadow:0 2px 10px rgba(0,0,0,0.3);}
+.header-wrap{display:flex;justify-content:space-between;align-items:center;}
+.logo{font-size:20px;font-weight:bold;}
+nav ul{display:flex;gap:24px;list-style:none;}
+nav a{color:var(--text-white);text-decoration:none;font-size:15px;padding:4px 8px;border-radius:4px;}
+nav a:hover, nav a:focus{text-decoration:underline;background-color:rgba(255,255,255,0.15);}
+.mobile-menu-btn{display:none;background:none;border:none;color:white;font-size:24px;cursor:pointer;padding:4px 8px;}
+
+/* Section Styles */
+.section{padding:50px 0;}
+.section-title{font-size:26px;color:var(--text-white);margin-bottom:28px;display:inline-block;border-bottom:3px solid var(--text-white);padding-bottom:6px;text-align:center;}
+.about-wrap{display:grid;grid-template-columns: 1.2fr 0.8fr;gap:24px;align-items: center;}
+.about-box{background:var(--card-bg);padding:32px 24px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.2);}
+.about-box p{margin-bottom:16px;}
+.about-box p:last-child{margin-bottom:0;}
+.fake-notice{font-size:13px;color:#FFE6E6;margin-bottom:20px;padding:10px;background:rgba(0,0,0,0.25);border-radius:8px;}
+
+/* Studio Scene & Animation Box */
+.scene-motion{
+    width:100%;
+    background:#FFF7EB;
+    color:#222222;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.35);
+    border:1px solid rgba(255,255,255,0.35);
+    transform:translateY(0px) rotateX(0deg) rotateY(0deg);
+    transform-origin:center center;
+    perspective:800px;
+    will-change:transform;
+}
+.scene-motion svg{width:100%;height:auto;display:block;border-radius:8px;}
+.scene-caption{font-size:13px;color:#4A3525;margin-top:12px;line-height:1.55;}
+.scene-hint{font-size:12px;color:#6E523D;margin-top:6px;font-weight:bold;}
+.anim-toggle-wrap{margin-bottom:12px;text-align:center;}
+#animPauseBtn{background:var(--accent-red);color:white;border:1px solid rgba(255,255,255,0.4);padding:8px 16px;border-radius:6px;font-size:13px;cursor:pointer;transition:background 0.2s;}
+#animPauseBtn:hover, #animPauseBtn:focus{background:var(--hover-red);}
+
+/* Project Grid */
+.project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.project-card{background:var(--card-bg);border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.2);display:flex;flex-direction:column;}
+.project-head{background:var(--card-head);color:white;padding:16px;font-weight:bold;}
+.project-body{padding:24px 20px;flex-grow:1;display:flex;flex-direction:column;justify-content:space-between;align-items:center;}
+.project-desc{margin:14px 0 20px 0;font-size:14px;color:#FFE6E6;}
+.detail-btn{background:var(--accent-red);color:white;border:1px solid rgba(255,255,255,0.4);padding:10px 18px;border-radius:6px;cursor:pointer;transition:background 0.2s;}
+.detail-btn:hover, .detail-btn:focus{background:var(--hover-red);}
+
+/* Modal */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);align-items:center;justify-content:center;padding:20px;z-index:20;}
+.modal.open{display:flex;}
+.modal-content{background:var(--card-bg);color:var(--text-white);max-width:700px;width:100%;border-radius:12px;padding:32px;max-height:85vh;overflow-y:auto;border:1px solid rgba(255,255,255,0.3);text-align:center;}
+.modal-close{float:right;border:none;background:none;color:white;font-size:24px;cursor:pointer;}
+
+/* Skill Wrap */
+.skill-wrap{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+.skill-card{background:var(--card-bg);padding:24px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.2);}
+.skill-card h4{color:var(--text-white);margin-bottom:14px;font-size:18px;}
+.skill-card ul{list-style:none;padding:0;}
+.skill-card li{margin-bottom:8px;}
+
+/* Activity List */
+.activity-list{background:var(--card-bg);padding:28px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.2);list-style:none;}
+.activity-list li{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.15);}
+.activity-list li:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+
+/* Contact Box */
+.contact-box{background:var(--card-head);color:white;padding:32px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);}
+.contact-box p{margin-bottom:8px;}
+.contact-box a{color:#FFD1D1;}
+
+footer{background:var(--card-head);color:white;text-align:center;padding:24px;font-size:14px;margin-top:40px;}
+
+/* Media Queries */
+@media(max-width:768px){
+    nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--card-head);padding:16px 20px;}
+    nav.open{display:block;}
+    nav ul{flex-direction:column;gap:14px;}
+    .mobile-menu-btn{display:block;}
+    .about-wrap{grid-template-columns:1fr;}
+    .scene-motion{order:2;margin-top:20px;}
+    .about-box{order:1;}
+    .skill-wrap{grid-template-columns:1fr;}
+}
+
+/* 屏幕宽度 ≤ 600px 时，每行只显示一张卡片 */
+@media(max-width:600px){
+    .project-grid{grid-template-columns:1fr;}
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scene-motion{transform:none !important;}
+    #studioMonitors, #studioCharacter, #studioPlant, #studioBubble{transform:none !important;}
+}
+</style>
+</head>
+<body>
+<header>
+    <div class="container header-wrap">
+        <div class="logo">윤서하 | Yun Seoha</div>
+        <button class="mobile-menu-btn" id="menuBtn" aria-label="메뉴 열기" aria-expanded="false">☰</button>
+        <nav id="navMenu">
+            <ul>
+                <li><a href="#about">자기소개</a></li>
+                <li><a href="#project">프로젝트</a></li>
+                <li><a href="#skill">역량</a></li>
+                <li><a href="#activity">활동기록</a></li>
+                <li><a href="#contact">연락처</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+<section id="about" class="section">
+    <h2 class="section-title">자기소개</h2>
+    <div class="about-wrap">
+        <div class="about-box">
+            <div class="fake-notice">※ 본 포트폴리오의 모든 학력, 경력, 프로젝트는 가상으로 제작된 내용입니다.</div>
+            <p>안녕하세요, 솔담대학교 경영정보학과 윤서하입니다. 데이터 분석과 경영 정보 시스템을 바탕으로 에너지 산업의 디지털 전환에 기여하고 싶어 모아빛에너지에 지원했습니다.</p>
+            <p>여울데이터랩 인턴과 별숲 데이터 챌린지 참가를 통해 데이터 수집·정제, 시각화, 간단한 예측 모델링 경험을 쌓았습니다. 경영 지식과 데이터 기술을 결합해 현장의 의사결정을 돕는 실용적인 분석가가 되는 것이 목표입니다.</p>
+            <p>꼼꼼한 데이터 검토와 명확한 결과 공유를 중요하게 생각하며, 팀원들과 논의하며 문제를 정의하고 해결하는 것을 선호합니다.</p>
+        </div>
+        <div>
+            <div class="anim-toggle-wrap">
+                <button id="animPauseBtn">애니메이션 일시정지</button>
+            </div>
+            <div class="scene-motion">
+<svg viewBox="0 0 420 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="캐릭터, 듀얼 모니터, 책상, 식물이 어우러진 데이터 작업실 일러스트">
+  <defs>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="5" stdDeviation="4" flood-color="#221810" flood-opacity="0.22"/>
+    </filter>
+    <linearGradient id="wallGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FDF7EE"/>
+      <stop offset="100%" stop-color="#F2E6D5"/>
+    </linearGradient>
+    <linearGradient id="deskTopGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#D4B48C"/>
+      <stop offset="50%" stop-color="#C6A276"/>
+      <stop offset="100%" stop-color="#B58E61"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 배경 벽면 및 장식 -->
+  <rect x="0" y="0" width="420" height="225" fill="url(#wallGrad)"/>
+  <line x1="0" y1="225" x2="420" y2="225" stroke="#DFCBB2" stroke-width="2"/>
+  <!-- 벽 선반 & 바인더 -->
+  <rect x="24" y="34" width="108" height="7" rx="3" fill="#B8926A"/>
+  <rect x="34" y="14" width="14" height="20" rx="2" fill="#629C81"/>
+  <rect x="52" y="18" width="12" height="16" rx="2" fill="#E09F67"/>
+  <rect x="68" y="12" width="16" height="22" rx="2" fill="#406652"/>
+
+  <!-- 말풍선 -->
+  <g id="studioBubble" filter="url(#softShadow)">
+    <rect x="255" y="18" width="142" height="44" rx="10" fill="#FFFFFF" stroke="#D8CBB8" stroke-width="1.5"/>
+    <polygon points="315,62 325,62 318,74" fill="#FFFFFF"/>
+    <text x="326" y="36" text-anchor="middle" font-size="9.5" fill="#7A624E" font-weight="bold">TODAY'S DATA NOTE</text>
+    <text x="326" y="51" text-anchor="middle" font-size="11" fill="#204030" font-weight="bold">"왜 달라졌을까?"</text>
+  </g>
+
+  <!-- 듀얼 모니터 레이어 -->
+  <g id="studioMonitors" filter="url(#softShadow)">
+    <!-- 왼쪽 모니터 -->
+    <rect x="44" y="88" width="132" height="96" rx="8" fill="#363940"/>
+    <rect x="53" y="97" width="114" height="76" rx="4" fill="#EEF6F3"/>
+    <polyline points="65,148 88,128 112,136 138,112 155,118" fill="none" stroke="#204030" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="65" y1="160" x2="120" y2="160" stroke="#81B89F" stroke-width="3" stroke-linecap="round"/>
+    <rect x="96" y="184" width="28" height="22" rx="3" fill="#4A4E57"/>
+    <rect x="84" y="204" width="52" height="5" rx="2.5" fill="#2D3036"/>
+
+    <!-- 오른쪽 모니터 -->
+    <rect x="192" y="78" width="132" height="96" rx="8" fill="#363940"/>
+    <rect x="201" y="87" width="114" height="76" rx="4" fill="#EEF6F3"/>
+    <circle cx="232" cy="116" r="13" fill="#629C81"/>
+    <path d="M232 116 L232 103 A13 13 0 0 1 244 121 Z" fill="#406652"/>
+    <rect x="256" y="106" width="46" height="6" rx="3" fill="#406652"/>
+    <rect x="256" y="118" width="36" height="6" rx="3" fill="#81B89F"/>
+    <rect x="212" y="142" width="14" height="12" rx="2" fill="#81B89F"/>
+    <rect x="232" y="136" width="14" height="18" rx="2" fill="#629C81"/>
+    <rect x="252" y="130" width="14" height="24" rx="2" fill="#406652"/>
+    <rect x="272" y="138" width="14" height="16" rx="2" fill="#204030"/>
+    <rect x="244" y="174" width="28" height="32" rx="3" fill="#4A4E57"/>
+    <rect x="232" y="204" width="52" height="5" rx="2.5" fill="#2D3036"/>
+  </g>
+
+  <!-- 캐릭터 레이어 -->
+  <g id="studioCharacter" filter="url(#softShadow)">
+    <!-- 어깨 및 상의 -->
+    <path d="M306 212 C306 192 374 192 374 212 Z" fill="#406652"/>
+    <!-- 머리 -->
+    <circle cx="340" cy="168" r="36" fill="#FFE8D8"/>
+    <!-- 머리카락 상단 -->
+    <path d="M305 162 C308 132 372 132 375 162 C364 148 350 144 340 144 C328 144 315 149 305 162 Z" fill="#2B3A32"/>
+    <!-- 표정 -->
+    <circle cx="328" cy="166" r="4" fill="#2B2B2B"/>
+    <circle cx="352" cy="166" r="4" fill="#2B2B2B"/>
+    <path d="M332 180 Q340 188 348 180" stroke="#2B2B2B" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+    <ellipse cx="318" cy="175" rx="5.5" ry="3.5" fill="#FFC9BC" opacity="0.75"/>
+    <ellipse cx="362" cy="175" rx="5.5" ry="3.5" fill="#FFC9BC" opacity="0.75"/>
+  </g>
+
+  <!-- 책상 및 소품 -->
+  <rect x="18" y="210" width="384" height="68" rx="7" fill="url(#deskTopGrad)" filter="url(#softShadow)"/>
+  <rect x="24" y="210" width="372" height="8" rx="4" fill="#DFC098"/>
+  <!-- 책상 다리 -->
+  <rect x="44" y="278" width="14" height="24" rx="3" fill="#8C6B47"/>
+  <rect x="362" y="278" width="14" height="24" rx="3" fill="#8C6B47"/>
+
+  <!-- 머그컵 -->
+  <g filter="url(#softShadow)">
+    <path d="M78 222 L72 254 H108 L102 222 Z" fill="#FFFFFF"/>
+    <ellipse cx="90" cy="222" rx="13" ry="4.5" fill="#EFECE6"/>
+    <path d="M104 229 C116 229 116 244 104 244" stroke="#629C81" stroke-width="3.8" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <!-- 식물 화분 레이어 -->
+  <g id="studioPlant" filter="url(#softShadow)">
+    <rect x="268" y="226" width="38" height="28" rx="4" fill="#A87B5E"/>
+    <rect x="265" y="223" width="44" height="6" rx="2.5" fill="#B98B6D"/>
+    <path d="M287 202 C272 207 270 220 287 218 C304 220 302 207 287 202" fill="#629C81"/>
+    <path d="M287 194 C275 199 274 212 287 210 C300 212 299 199 287 194" fill="#81B89F"/>
+    <path d="M287 187 C278 190 277 201 287 199 C297 201 296 190 287 187" fill="#9FD3B8"/>
+  </g>
+</svg>
+<p class="scene-caption">캐릭터, 듀얼 모니터, 책상과 식물을 한 장면에 구성한 데이터 작업실 일러스트입니다[cite: 1, 2].</p>
+<p class="scene-hint">마우스를 움직이거나 페이지를 스크롤해 보세요[cite: 2].</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="project" class="section">
+    <h2 class="section-title">프로젝트 (총 3건)</h2>
+    <div class="project-grid">
+        <div class="project-card">
+            <div class="project-head">프로젝트 1 | 에너지 사용 패턴 분석</div>
+            <div class="project-body">
+                <div>
+                    <p><strong>주제</strong> : 가정용 전력 사용량 패턴 분석 및 절감 제안</p>
+                    <p class="project-desc">공공 에너지 데이터를 활용해 사용 패턴을 분석하고, 시계열 기반의 간단한 소비 예측 대시보드를 제작했습니다.</p>
+                </div>
+                <button class="detail-btn" data-id="proj1">상세보기</button>
+            </div>
+        </div>
+        <div class="project-card">
+            <div class="project-head">프로젝트 2 | 고객 문의 텍스트 분류</div>
+            <div class="project-body">
+                <div>
+                    <p><strong>주제</strong> : 에너지 기업 고객센터 문의 텍스트 자동 분류</p>
+                    <p class="project-desc">여울데이터랩 인턴 과제로, 고객 상담 텍스트를 카테고리별로 분류해 업무 효율화 방안을 도출했습니다.</p>
+                </div>
+                <button class="detail-btn" data-id="proj2">상세보기</button>
+            </div>
+        </div>
+        <div class="project-card">
+            <div class="project-head">프로젝트 3 | 별숲 데이터 챌린지</div>
+            <div class="project-body">
+                <div>
+                    <p><strong>주제</strong> : 지역 신재생 에너지 수요-공급 불균형 분석</p>
+                    <p class="project-desc">별숲 데이터 챌린지 출전 프로젝트로, 태양광 발전 데이터와 지역 수요 데이터를 결합해 시각화 리포트를 작성했습니다.</p>
+                </div>
+                <button class="detail-btn" data-id="proj3">상세보기</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="skill" class="section">
+    <h2 class="section-title">보유 역량</h2>
+    <div class="skill-wrap">
+        <div class="skill-card">
+            <h4>데이터 분석</h4>
+            <ul>
+                <li>Python (Pandas, Matplotlib, Seaborn)</li>
+                <li>SQL 데이터 조회·정제</li>
+                <li>데이터 시각화, 대시보드 제작</li>
+                <li>기초 시계열 분석</li>
+            </ul>
+        </div>
+        <div class="skill-card">
+            <h4>경영 & 업무 역량</h4>
+            <ul>
+                <li>경영정보시스템 이해</li>
+                <li>보고서 작성, 데이터 기반 제안</li>
+                <li>팀 프로젝트 협업, 발표</li>
+                <li>MS Office (Excel 고급, PPT)</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section id="activity" class="section">
+    <h2 class="section-title">활동 기록</h2>
+    <ul class="activity-list">
+        <li><strong>여울데이터랩 인턴</strong>｜데이터 정제, 고객 데이터 분석 지원, 분석 보조 업무</li>
+        <li><strong>별숲 데이터 챌린지 참가</strong>｜신재생 에너지 데이터 분석 팀원, 시각화 및 리포트 담당</li>
+        <li><strong>솔담대학교 경영정보학과 학술동아리</strong>｜데이터 분석 스터디, 학기별 분석 과제 발표</li>
+        <li><strong>교내 경영데이터 경진대회</strong>｜기업 판매 데이터 분석으로 우수상 수상</li>
+    </ul>
+</section>
+
+<section id="contact" class="section">
+    <h2 class="section-title">연락처</h2>
+    <div class="contact-box">
+        <p>이름 : 윤서하 (Yun Seoha)</p>
+        <p>소속 : 솔담대학교 경영정보학과</p>
+        <p>이메일 : <a href="mailto:seoha@example.com">seoha@example.com</a></p>
+    </div>
+</section>
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+        <button class="modal-close" id="closeModal" aria-label="닫기">×</button>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <p>© 윤서하 포트폴리오 | 모든 내용은 가상입니다.</p>
+    </div>
+</footer>
+
+<script>
+const menuBtn = document.getElementById('menuBtn');
+const navMenu = document.getElementById('navMenu');
+
+menuBtn.addEventListener('click', ()=>{
+    const isOpen = navMenu.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', isOpen);
+});
+
+navMenu.querySelectorAll('a').forEach(link=>{
+    link.addEventListener('click',()=>{
+        navMenu.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+    })
+})
+
+const modal = document.getElementById('modal');
+const modalBody = document.getElementById('modalBody');
+const closeModal = document.getElementById('closeModal');
+let lastActiveElement = null;
+
+const projectData = {
+    proj1:`
+        <h3 style="margin-bottom:12px;">프로젝트 1｜가정용 전력 사용량 패턴 분석 및 절감 제안</h3>
+        <p><strong>배경</strong> : 에너지 효율 관리의 중요성이 높아짐에 따라 일반 가구의 전력 소비 특성을 파악하고 실질적인 절감 방안을 제시하기 위해 진행했습니다.</p>
+        <br>
+        <p><strong>수행 내용</strong> : 공개 전력 사용 데이터를 수집·정제, 시간대별 소비 패턴 분석, 이상 소비 탐지, Python으로 시계열 예측 모델 구현, 간단한 대시보드 제작.</p>
+        <br>
+        <p><strong>결과</strong> : 피크 시간대 소비 특징을 정리하고 사용자 맞춤 절감 가이드 리포트를 작성했습니다.</p>
+    `,
+    proj2:`
+        <h3 style="margin-bottom:12px;">프로젝트 2｜에너지 기업 고객센터 문의 텍스트 자동 분류</h3>
+        <p><strong>배경</strong> : 여울데이터랩 인턴 중 고객센터 상담 건수 증가로 인한 분류 업무 부담을 줄이기 위한 과제입니다.</p>
+        <br>
+        <p><strong>수행 내용</strong> : 상담 텍스트 라벨링, 텍스트 전처리, 분류 모델 테스트, 분류 결과 기반 상담 유형 통계 시각화.</p>
+        <br>
+        <p><strong>결과</strong> : 반복 문의 유형을 정리하고 자동 분류 프로토타입을 제작해 업무 분담 효율화 방안을 보고했습니다.</p>
+    `,
+    proj3:`
+        <h3 style="margin-bottom:12px;">프로젝트 3｜별숲 데이터 챌린지 : 지역 신재생 에너지 수요-공급 불균형 분석</h3>
+        <p><strong>배경</strong> : 신재생 에너지 확산에 따라 발전량과 지역 수요 사이의 불균형 문제를 데이터로 진단하는 것이 주제입니다.</p>
+        <br>
+        <p><strong>수행 내용</strong> : 태양광 발전 데이터, 지역 전력 수요 데이터 결합, 공급-수요 차이 계산, 지도 기반 시각화, 개선 방향 제안.</p>
+        <br>
+        <p><strong>결과</strong> : 챌린지 제출용 리포트와 시각화 자료를 완성하고 팀 발표를 진행했습니다.</p>
+    `
+};
+
+function openModal(id) {
+    lastActiveElement = document.activeElement;
+    modalBody.innerHTML = projectData[id];
+    modal.classList.add('open');
+    closeModal.focus();
+}
+
+function hideModal() {
+    modal.classList.remove('open');
+    if (lastActiveElement) {
+        lastActiveElement.focus();
+    }
+}
+
+document.querySelectorAll('.detail-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        const id = btn.dataset.id;
+        openModal(id);
+    })
+})
+
+closeModal.addEventListener('click', hideModal);
+
+modal.addEventListener('click',(e)=>{
+    if(e.target === modal){
+        hideModal();
+    }
+});
+
+document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape' && modal.classList.contains('open')){
+        hideModal();
+    }
+});
+
+// ===== 工作室动态响应与立体视差逻辑 =====
+const sceneEl = document.querySelector('.scene-motion');
+const monitorsEl = document.getElementById('studioMonitors');
+const characterEl = document.getElementById('studioCharacter');
+const plantEl = document.getElementById('studioPlant');
+const bubbleEl = document.getElementById('studioBubble');
+const animPauseBtn = document.getElementById('animPauseBtn');
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+let animPaused = REDUCED_MOTION;
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+let scrollY = window.scrollY;
+let isMobile = window.innerWidth <= 768;
+
+const PERIOD = 7000;
+const FLOAT_RANGE = 5;
+const SCROLL_MAX_UP = 20;
+const MAX_ROT = 4.5;
+
+if (REDUCED_MOTION) {
+    animPauseBtn.textContent = '애니메이션 재생';
+}
+
+function updateIsMobile(){
+    isMobile = window.innerWidth <= 768;
+}
+window.addEventListener('resize', updateIsMobile);
+
+window.addEventListener('mousemove', (e)=>{
+    if(isMobile) return;
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
+
+window.addEventListener('scroll', ()=>{
+    scrollY = window.scrollY;
+});
+
+animPauseBtn.addEventListener('click', ()=>{
+    animPaused = !animPaused;
+    animPauseBtn.textContent = animPaused ? '애니메이션 재생' : '애니메이션 일시정지';
+});
+
+document.addEventListener('visibilitychange', ()=>{
+    if(document.hidden){
+        animPaused = true;
+        animPauseBtn.textContent = '애니메이션 재생';
+    }
+});
+
+function animate(timestamp){
+    if(!animPaused && !document.hidden){
+        const phase = (timestamp % PERIOD) / PERIOD;
+        const floatY = Math.sin(phase * Math.PI * 2) * FLOAT_RANGE;
+        const bubbleFloatY = Math.cos(phase * Math.PI * 2) * 2.2;
+
+        const scrollFactor = Math.min(scrollY / 300, 1);
+        const scrollOffset = -scrollFactor * SCROLL_MAX_UP;
+
+        let rotX = 0, rotY = 0, dx = 0, dy = 0;
+        if(!isMobile){
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            dx = Math.max(-1, Math.min(1, (mouseX - centerX) / centerX));
+            dy = Math.max(-1, Math.min(1, (mouseY - centerY) / centerY));
+            rotY = dx * MAX_ROT;
+            rotX = -dy * MAX_ROT;
+        }
+
+        const totalY = floatY + scrollOffset;
+        sceneEl.style.transform = `translateY(${totalY.toFixed(2)}px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg)`;
+
+        if (monitorsEl) {
+            monitorsEl.style.transform = `translate(${(-dx * 2.5).toFixed(2)}px, ${(-dy * 1.8).toFixed(2)}px)`;
+        }
+        if (characterEl) {
+            characterEl.style.transform = `translate(${(dx * 3).toFixed(2)}px, ${(dy * 2).toFixed(2)}px)`;
+        }
+        if (plantEl) {
+            plantEl.style.transform = `translate(${(dx * 4).toFixed(2)}px, ${(dy * 2.5).toFixed(2)}px)`;
+        }
+        if (bubbleEl) {
+            bubbleEl.style.transform = `translate(${(dx * 3.5).toFixed(2)}px, ${bubbleFloatY.toFixed(2)}px)`;
+        }
+    }
+    requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
+</script>
+</body>
+</html>
